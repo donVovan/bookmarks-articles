@@ -1,12 +1,12 @@
 import './App.css'
-import SliderComponent from "./components/SliderComponent.jsx";
+import Container from "./components/Container.jsx";
 
 function App() {
 
 
   return (
     <>
-     <SliderComponent />
+     <Container />
     </>
   )
 }

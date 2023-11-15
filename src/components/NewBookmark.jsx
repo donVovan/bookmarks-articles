@@ -13,7 +13,17 @@ function NewBookmark() {
         setJsonData(data);
     }
 
-    console.log(jsonData)
+    function renderData() {
+        return <ul>
+            {jsonData.map(item => (
+                <li key={item._id}>
+                    <a href={item.link}>{item.tittle}</a>
+                </li>
+            ))}
+        </ul>
+    }
+
+   // console.log(jsonData)
 
 /*    useEffect(() => {
         //let res = typeof jsonData
@@ -21,7 +31,7 @@ function NewBookmark() {
     }, [jsonData]);*/
 
     return <div>
-        {}
+        {renderData()}
     </div>
 }
 
