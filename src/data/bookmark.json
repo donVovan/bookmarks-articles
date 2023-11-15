@@ -1,0 +1,26 @@
+[
+  {
+    "tittle": "Тестовый скрипт для проверки NodeJS хостинга",
+    "link": "https://code.mu/ru/javascript/nodejs/book/hosting/basis/test-script/"
+  },
+  {
+    "tittle": "Тестовые коллекции для следующих уроков",
+    "link": "https://code.mu/ru/javascript/nodejs/book/mongo/basis/test-collections/"
+  },
+  {
+    "tittle": "Параметры маршрутов в Express",
+    "link": "https://code.mu/ru/javascript/nodejs/book/express/routing/params/"
+  },
+  {
+    "tittle": "Установка соединения к MongoDB",
+    "link": "https://code.mu/ru/javascript/nodejs/book/mongo/basis/connection-establishing/"
+  },
+  {
+    "tittle": "Статичные файлы домена через Nginx на VPS сервере",
+    "link": "https://code.mu/ru/javascript/nodejs/book/hosting/domains/static-files/"
+  },
+  {
+    "tittle": "География стран",
+    "link": "http://geo.vladimirblinov.ru/"
+  }
+]
