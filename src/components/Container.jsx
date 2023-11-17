@@ -27,7 +27,7 @@ function Container() {
     function renderData() {
         if (jsonData) {
             return <ul>
-                {jsonData.map(item => (
+                {jsonData.map((item, index) => (
                     <li key={item._id}>
                         <a href={item.link}>{item.tittle}</a>
                         <input type="checkbox" checked={item.checked} onChange={()=>handleStatus(index)}/> убрать в архив
