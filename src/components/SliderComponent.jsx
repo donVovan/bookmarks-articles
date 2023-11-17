@@ -29,8 +29,8 @@ function SliderComponent(){
             //pagination="true"
         >
             <swiper-slide>{<NewBookmark/>}</swiper-slide>
-            <swiper-slide>{<OldBookmark/>}</swiper-slide>
             <swiper-slide>{<AddBookmark/>}</swiper-slide>
+            <swiper-slide>{<OldBookmark/>}</swiper-slide>
 
         </swiper-container>
     );

@@ -4,6 +4,7 @@ import {MyContext} from "./MyContext.jsx";
 
 function Container() {
     const [jsonData, setJsonData] = useState(null);
+    const [checked, setChecked] = useState(false);
 
     useEffect(() => {
         fetchData();
@@ -15,12 +16,21 @@ function Container() {
         setJsonData(data);
     }
 
+    function handleStatus(index) {
+        setJsonData(prevData => {
+          const newData = [...prevData];
+          newData[index].isChecked = !newData[index].isChecked;
+          return newData;
+        })
+    }
+
     function renderData() {
         if (jsonData) {
             return <ul>
                 {jsonData.map(item => (
                     <li key={item._id}>
-                        <a href={item.link}>{item.tittle}</a>{item.status}
+                        <a href={item.link}>{item.tittle}</a>
+                        <input type="checkbox" checked={item.checked} onChange={()=>handleStatus(index)}/> убрать в архив
                     </li>
                 ))}
             </ul>
