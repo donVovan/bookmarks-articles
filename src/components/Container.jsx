@@ -5,7 +5,6 @@ import {MyContext} from "./MyContext.jsx";
 function Container() {
     const [jsonData, setJsonData] = useState(null);
     const [checkedItems, setCheckedItems] = useState({});
-    const [inputValues, setInputValues] = useState({value1: 0, value2: 0, value3: 0});
     const [serverResponse, setServerResponse] = useState(null);
 
     useEffect(() => {
@@ -20,27 +19,19 @@ function Container() {
 
     function handleStatus(index) {
         setJsonData(prevData => {
-          const newData = [...prevData];
-          newData[index].isChecked = !newData[index].isChecked;
-          setCheckedItems(prevCheckedItems => ({
-              ...prevCheckedItems,
-              [newData[index]._id]: newData[index].isChecked
-          }));
-          return newData;
+            const newData = [...prevData];
+            newData[index].isChecked = !newData[index].isChecked;
+            setCheckedItems(prevCheckedItems => ({
+                ...prevCheckedItems,
+                [newData[index]._id]: newData[index].isChecked
+            }));
+            return newData;
         })
-    }
-
-    function handleInputChange(event, inputName) {
-        setInputValues(prevValues => ({
-            ...prevValues,
-            [inputName]: event.target.value
-        }));
     }
 
 
     async function handleButtonClick() {
         const dataToSend = {
-            ...inputValues,
             checkedItems
         }
         const response = await fetch('http://localhost:3002/data/', {
@@ -58,14 +49,19 @@ function Container() {
 
     function renderData() {
         if (jsonData) {
-            return <ul>
-                {jsonData.map((item, index) => (
-                    <li key={item._id}>
-                        <a href={item.link}>{item.tittle}</a>
-                        <input type="checkbox" checked={item.checked} onChange={()=>handleStatus(index)}/> убрать в архив
-                    </li>
-                ))}
-            </ul>
+            return (
+                <ul>
+                    {jsonData.map((item, index) => (
+                        item.status === true && (
+                        <li key={item._id}>
+                            <a href={item.link}>{item.tittle}</a>
+                            <input type="checkbox" checked={item.checked} onChange={() => handleStatus(index)}/> убрать
+                            в архив
+                        </li>
+                        )
+                    ))}
+                </ul>
+            )
         }
 
     }
@@ -80,11 +76,7 @@ function Container() {
                 <SliderComponent/>
             </MyContext.Provider>
             <div>
-                <input type="number" value={inputValues.value1} onChange={(e) => handleInputChange(e, 'value1')} />
-                <input type="number" value={inputValues.value2} onChange={(e) => handleInputChange(e, 'value2')} />
-                <input type="number" value={inputValues.value3} onChange={(e) => handleInputChange(e, 'value3')} />
                 <button onClick={handleButtonClick}>Отправить на сервер</button>
-                <div>Ответ сервера: {serverResponse !== null ? serverResponse : ''}</div>
             </div>
         </>
     )
