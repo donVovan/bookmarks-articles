@@ -4,7 +4,7 @@ import {MyContext} from "./MyContext.jsx";
 
 function Container() {
     const [jsonData, setJsonData] = useState(null);
-    const [checked, setChecked] = useState(false);
+    const [checkedItems, setCheckedItems] = useState({});
     const [inputValues, setInputValues] = useState({value1: 0, value2: 0, value3: 0});
     const [serverResponse, setServerResponse] = useState(null);
 
@@ -22,6 +22,10 @@ function Container() {
         setJsonData(prevData => {
           const newData = [...prevData];
           newData[index].isChecked = !newData[index].isChecked;
+          setCheckedItems(prevCheckedItems => ({
+              ...prevCheckedItems,
+              [newData[index]._id]: newData[index].isChecked
+          }));
           return newData;
         })
     }
@@ -35,12 +39,16 @@ function Container() {
 
 
     async function handleButtonClick() {
-        const response = await fetch('http://localhost:3002/calc/', {
+        const dataToSend = {
+            ...inputValues,
+            checkedItems
+        }
+        const response = await fetch('http://localhost:3002/data/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(inputValues),
+            body: JSON.stringify(dataToSend),
         });
         // здесь можно добавить обработку ответа, если необходимо
         const data = await response.json();
