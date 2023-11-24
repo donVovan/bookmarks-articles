@@ -43,11 +43,12 @@ function Container() {
         });
         // здесь можно добавить обработку ответа, если необходимо
         const data = await response.json();
-        setServerResponse(data.sum);
+        //setJsonData(data);
+        setServerResponse(data);
     }
 
 
-    function renderData() {
+    function renderDataNew() {
         if (jsonData) {
             return (
                 <ul>
@@ -66,8 +67,29 @@ function Container() {
 
     }
 
+    function renderDataOld() {
+        if (jsonData) {
+            return (
+                <ul>
+                    {jsonData.map((item, index) => (
+                        item.status === false && (
+                            <li key={item._id}>
+                                <a href={item.link}>{item.tittle}</a>
+                                <input type="checkbox" checked={item.checked} onChange={() => handleStatus(index)}/> убрать
+                                в архив
+                            </li>
+                        )
+                    ))}
+                </ul>
+            )
+        }
+
+    }
+
     const functions = {
-        renderData: renderData
+        renderDataNew: renderDataNew,
+        renderDataOld: renderDataOld
+
     }
 
     return (
