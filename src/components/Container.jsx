@@ -6,6 +6,44 @@ function Container() {
     const [jsonData, setJsonData] = useState(null);
     const [checkedItems, setCheckedItems] = useState({});
     const [serverResponse, setServerResponse] = useState(null);
+    const [newListItems, setNewListItems] = useState([
+        {
+            _id: '655618eb286e546624a0380f',
+            tittle:"Тестовый скрипт для проверки NodeJS хостинга",
+            link: "https://code.mu/ru/javascript/nodejs/book/hosting/basis/test-script/",
+            status: true
+        },
+        {
+            _id: '655618eb286e546624a03810',
+            tittle:"Тестовые коллекции для следующих уроков",
+            link: "https://code.mu/ru/javascript/nodejs/book/mongo/basis/test-collections/",
+            status: false
+        },
+        {
+            _id: '655618eb286e546624a03811',
+            tittle:"Параметры маршрутов в Express",
+            link: "https://code.mu/ru/javascript/nodejs/book/express/routing/params/",
+            status: false
+        },
+        {
+            _id: '655618eb286e546624a03812',
+            tittle:"Установка соединения к MongoDB",
+            link: "https://code.mu/ru/javascript/nodejs/book/mongo/basis/connection-establishing/",
+            status: true
+        },
+        {
+            _id: '655618eb286e546624a03813',
+            tittle:"Статичные файлы домена через Nginx на VPS сервере",
+            link: "https://code.mu/ru/javascript/nodejs/book/hosting/domains/static-files/",
+            status: true
+        },
+        {
+            _id: '655618eb286e546624a03814',
+            tittle:"География стран",
+            link: "http://geo.vladimirblinov.ru/",
+            status: false
+        }
+    ])
 
     useEffect(() => {
         fetchData();
@@ -50,6 +88,7 @@ function Container() {
 
     function renderDataNew() {
         if (jsonData) {
+            console.log(jsonData)
             return (
                 <ul>
                     {jsonData.map((item, index) => (
