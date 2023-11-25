@@ -6,12 +6,12 @@ function Container() {
     const [jsonData, setJsonData] = useState(null);
     const [checkedItems, setCheckedItems] = useState({});
     const [serverResponse, setServerResponse] = useState(null);
-    const [newListItems, setNewListItems] = useState([
+    /*const [newListItems, setNewListItems] = useState([
         {
             _id: '655618eb286e546624a0380f',
             tittle:"Тестовый скрипт для проверки NodeJS хостинга",
             link: "https://code.mu/ru/javascript/nodejs/book/hosting/basis/test-script/",
-            status: true
+            status: false
         },
         {
             _id: '655618eb286e546624a03810',
@@ -29,13 +29,13 @@ function Container() {
             _id: '655618eb286e546624a03812',
             tittle:"Установка соединения к MongoDB",
             link: "https://code.mu/ru/javascript/nodejs/book/mongo/basis/connection-establishing/",
-            status: true
+            status: false
         },
         {
             _id: '655618eb286e546624a03813',
             tittle:"Статичные файлы домена через Nginx на VPS сервере",
             link: "https://code.mu/ru/javascript/nodejs/book/hosting/domains/static-files/",
-            status: true
+            status: false
         },
         {
             _id: '655618eb286e546624a03814',
@@ -43,7 +43,9 @@ function Container() {
             link: "http://geo.vladimirblinov.ru/",
             status: false
         }
-    ])
+    ]);*/
+    const [newListItems, setNewListItems] = useState([])
+    const [oldListItems, setOldListItems] = useState([]);
 
     useEffect(() => {
         fetchData();
@@ -53,6 +55,7 @@ function Container() {
         const response = await fetch('http://localhost:3002/test/');
         const data = await response.json();
         setJsonData(data);
+        setNewListItems(data);
     }
 
     function handleStatus(index) {
@@ -67,6 +70,12 @@ function Container() {
         })
     }
 
+    function handleMoveToOld() {
+        const updatedNewListItems = newListItems.filter(item => !item.checked);
+        const checkedItems = newListItems.filter(item => item.checked);
+        setNewListItems(updatedNewListItems);
+        setOldListItems([...oldListItems, ...checkedItems]);
+    }
 
     async function handleButtonClick() {
         const dataToSend = {
@@ -88,7 +97,7 @@ function Container() {
 
     function renderDataNew() {
         if (jsonData) {
-            console.log(jsonData)
+            //console.log(newListItems)
             return (
                 <ul>
                     {jsonData.map((item, index) => (
