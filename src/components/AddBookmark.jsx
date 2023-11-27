@@ -1,42 +1,55 @@
-import {useState, useEffect} from "react";
-import data from '../data/bookmark.json'
+import {useState} from "react";
+import axios from 'axios';
 
 function AddBookmark() {
     const [link, setLink] = useState('');
     const [title, setTitle] = useState('');
-    const [jsonData, setJsonData] = useState('');
+    const [status, setStatus] = useState(true)
 
+    //const [jsonData, setJsonData] = useState('');
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+    async function handleAddBookmark(event) {
+        event.preventDefault();
 
-    async function fetchData() {
-        const response = await fetch('http://localhost:3002/test');
-        const data = await response.json();
-        setJsonData(data);
+        try {
+            const response = await axios.post('http://localhost:3002/add/', {
+                link: link,
+                title: title,
+                status: status
+            })
+            console.log('Успешно отправлено на сервер:', response.data)
+
+            setLink('');
+            setTitle('');
+            setStatus(true)
+        } catch (error) {
+            console.error('Ошибка при отправке на сервер:', error)
+        }
     }
 
-    useEffect(() => {
-        //console.log(jsonData)
-    }, [jsonData]);
+
+    /*async function handleAddBookmark() {
+
+        const newDataSend = {
+            link, title, status
+        }
+        const response = await fetch('http://localhost:3002/add/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newDataSend)
+        });
 
 
-    function handleAddBookmark() {
-        const newBookmark = {link, title};
-
-        const existingBookmarks = data.bookmarks || [];
-
-        localStorage.setItem('bookmarks', JSON.stringify([...existingBookmarks, newBookmark]))
-
-        setLink('');
-        setTitle('');
     }
 
+    console.log(link)
+    console.log(title)*/
 
     return (
         <div>
-            <form>
+            <form onSubmit={handleAddBookmark}>
                 <label>
                     Link: <input
                     type="text"
@@ -44,8 +57,7 @@ function AddBookmark() {
                     onChange={event => setLink(event.target.value)}
                 />
                 </label>
-            </form>
-            <form>
+
                 <label>
                     Tittle: <input
                     type="text"
@@ -53,8 +65,9 @@ function AddBookmark() {
                     onChange={event => setTitle(event.target.value)}
                 />
                 </label>
+                <button type="submit">Add Bookmark</button>
             </form>
-            <button onClick={handleAddBookmark}>Add Bookmark</button>
+
         </div>
     )
 }
