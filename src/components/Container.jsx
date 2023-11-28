@@ -1,50 +1,76 @@
 import SliderComponent from "./slider/SliderComponent.jsx";
 import {MyContext} from "./MyContext";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 
 function Container() {
-    const [link, setLink] = useState('');
-    const [title, setTitle] = useState('');
-    const [status, setStatus] = useState(true)
+    const [bookmark, setBookmark] = useState({
+        link:'',
+        title:'',
+        status: true
+    })
+    const [jsonData, setJsonData] = useState(null);
+
+    useEffect(() => {
+        axios.get('http://localhost:3002/test/')
+            .then(response => {
+                setJsonData(response.data)
+            })
+            .catch(error => {
+                console.error('Ошибка получения данных:', error)
+            })
+    }, [])
+
+
+    function renderDataNew() {
+        if (jsonData){
+            return (
+                <ul>
+                    {jsonData.map((item) => (
+                        item.status === true && (
+                            <li key={item._id}>
+                                <a href={item.link}>{item.title}</a>
+                            </li>
+                        )
+                    ))}
+                </ul>
+            )
+        }
+    }
+
+
 
     async function handleAddBookmark(event) {
         event.preventDefault();
 
-        try {
-            const response = await axios.post('http://localhost:3002/add/', {
-                title: title,
-                link: link,
-                status: status
+        axios.post('http://localhost:3002/add/', bookmark)
+            .then(response => {
+                console.log('Данные успешно отправлены на сервер:', response.data);
+                // Опционально: обновление состояния или выполнение других действий после отправки
             })
-            console.log('Успешно отправлено на сервер:', response.data)
-
-            setLink('');
-            setTitle('');
-            setStatus(true)
-        } catch (error) {
-            console.error('Ошибка при отправке на сервер:', error)
-        }
+            .catch(error => {
+                console.error('Ошибка при отправке данных на сервер:', error)
+            })
     }
 
     function renderAddBookmark() {
         return <div>
             <form onSubmit={handleAddBookmark}>
-                <label>
+
                     Link: <input
                     type="text"
-                    value={link}
-                    onChange={event => setLink(event.target.value)}
+                    value={bookmark.link}
+                    onChange={event => setBookmark({...bookmark, link: event.target.value})}
+                    placeholder="Ссылка"
                 />
-                </label>
 
-                <label>
-                    Tittle: <input
+                    title: <input
                     type="text"
-                    value={title}
-                    onChange={event => setTitle(event.target.value)}
+                    value={bookmark.title}
+                    onChange={event => setBookmark({...bookmark, title: event.target.value})}
+                    placeholder="Описание"
                 />
-                </label>
+
                 <button type="submit">Add Bookmark</button>
             </form>
 
@@ -52,7 +78,8 @@ function Container() {
     }
 
     const functions = {
-        renderAddBookmark: renderAddBookmark
+        renderAddBookmark: renderAddBookmark,
+        renderDataNew: renderDataNew
     }
     return (
         <>
