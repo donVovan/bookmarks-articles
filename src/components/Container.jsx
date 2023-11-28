@@ -21,18 +21,31 @@ function Container() {
             })
     }, [])
 
+    function handleStatus(index) {
+        const updatedData = jsonData.filter((item, i) => i !== index);
+        setJsonData(updatedData);
+        console.log(updatedData)
+        // сюда добавить переключение статуса на false
+    }
+
 
     function renderDataNew() {
         if (jsonData){
             return (
                 <ul>
-                    {jsonData.map((item) => (
-                        item.status === true && (
+                    {jsonData.map((item, index) => (
+                        item.status && (
                             <li key={item._id}>
                                 <a href={item.link}>{item.title}</a>
+                                <input
+                                    type="checkbox"
+                                    checked={item.checked}
+                                    onChange={() => handleStatus(index)}
+                                />
                             </li>
                         )
-                    ))}
+                        )
+                    )}
                 </ul>
             )
         }
