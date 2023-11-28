@@ -13,7 +13,7 @@ function NewBookmark() {
         }, [jsonData]);*/
 
     return <div>
-        {functions.renderDataNew()}
+
     </div>
 }
 

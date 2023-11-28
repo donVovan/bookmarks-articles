@@ -1,0 +1,20 @@
+.block {
+    display: flex;
+    flex-flow: column nowrap;
+
+}
+
+input[type=text] {
+     min-width: 500px;
+    margin: 5px;
+    padding: 5px;
+    flex: 0 1 auto;
+ }
+
+button {
+    max-width: 200px;
+    margin: 5px;
+    padding: 5px;
+    flex: 0 1 content;
+    align-items: center;
+}
