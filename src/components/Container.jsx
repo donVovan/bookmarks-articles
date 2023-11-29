@@ -22,16 +22,21 @@ function Container() {
     }, [])
 
     function handleStatus(index) {
-        const updatedData = jsonData.filter((item, i) => i !== index);
+        const updatedData = jsonData.map((item, i) => {
+            if (i === index){
+                return {...item, status: false};
+            }
+            return item;
+        });
         setJsonData(updatedData);
         console.log(updatedData)
-        // сюда добавить переключение статуса на false
     }
 
 
     function renderDataNew() {
         if (jsonData){
             return (
+                <>
                 <ul>
                     {jsonData.map((item, index) => (
                         item.status && (
@@ -47,6 +52,8 @@ function Container() {
                         )
                     )}
                 </ul>
+                    <button>Сохранить изменения</button>
+                </>
             )
         }
     }
