@@ -9,6 +9,9 @@ function Container() {
         title:'',
         status: true
     })
+
+    console.log(bookmark)
+
     const [jsonData, setJsonData] = useState(null); //определение состояния jsonData (JSON-данные) и функции для его обновления
 
     useEffect(() => { // эффект, который срабатывает после первого рендера компонента
@@ -74,15 +77,15 @@ function Container() {
 
     async function handleAddBookmark(event) { // асинхронная функция для добавления закладки
         event.preventDefault(); // предотвращение действия по умолчанию при отправке формы
-
-        axios.post('http://localhost:3002/add/', bookmark) // отправка POST-запроса с данными о закладке на сервер
-            .then(response => { // обработка успешного ответа от сервера
-                console.log('Данные успешно отправлены на сервер:', response.data);
-                // Опционально: обновление состояния или выполнение других действий после отправки
-            })
-            .catch(error => {
-                console.error('Ошибка при отправке данных на сервер:', error)
-            })
+        try {
+            const response = await axios.post('http://localhost:3002/add/', bookmark); // отправка POST-запроса с данными о закаладке на сервер
+            console.log('Данные успешно отправлены на сервер:', response.data);
+            const updatedData = jsonData ? [...jsonData, bookmark] : [bookmark]; // добавляем новую закладку к существующим данным, или создаем новый массив, если данных ещё нет
+            setJsonData(updatedData); // обновление состояния jsonData новыми данными
+        } catch (error) {
+            console.error('Ошибка при отправке данных на сервер:', error);
+            // Логика обработки ошибки, если необходимо
+        }
     }
 
     function renderAddBookmark() {
