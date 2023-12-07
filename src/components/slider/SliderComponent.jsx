@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { register } from 'swiper/element/bundle';
-import NewBookmark from "../NewBookmark.jsx";
+import NewBookmark from "./newBookmark/NewBookmark.jsx";
 import OldBookmark from "../OldBookmark.jsx";
 import AddBookmark from "./addBookmark/AddBookmark.jsx";
 

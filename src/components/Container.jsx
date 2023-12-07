@@ -74,6 +74,32 @@ function Container() {
         }
     }
 
+    function renderDataOld() {
+        if (jsonData){
+            return (
+                <>
+                    <ul>
+                        {jsonData.map((item, index) => ( //маппинг данных для отображения в виде списка
+                                !item.status && ( // если статус равен true
+                                    //создаем элемент списка с уникальным ключом, если в jsonData нет ключа _id то создаем сами при помощи nanoid
+                                    <li key={item._id}>
+                                        <a href={item.link}>{item.title}</a>
+                                        <input
+                                            type="checkbox"
+                                            checked={item.checked}
+                                            onChange={() => handleStatus(index)} // обработчик изменения состояния при клике на чекбокс
+                                        />
+                                    </li>
+                                )
+                            )
+                        )}
+                    </ul>
+                    <button onClick={handleButtonClick}>Сохранить изменения</button>
+                </>
+            )
+        }
+    }
+
 
 
     async function handleAddBookmark(event) { // асинхронная функция для добавления закладки
@@ -119,7 +145,8 @@ function Container() {
 
     const functions = {
         renderAddBookmark: renderAddBookmark,
-        renderDataNew: renderDataNew
+        renderDataNew: renderDataNew,
+        renderDataOld: renderDataOld
     }
     return (
         <>
