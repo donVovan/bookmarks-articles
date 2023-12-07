@@ -2,6 +2,7 @@ import SliderComponent from "./slider/SliderComponent.jsx";
 import {MyContext} from "./MyContext";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import { nanoid } from "nanoid";
 
 function Container() {
     const [bookmark, setBookmark] = useState({ // определение состояния bookmark и функции для его обновления
@@ -54,7 +55,7 @@ function Container() {
                 <ul>
                     {jsonData.map((item, index) => ( //маппинг данных для отображения в виде списка
                         item.status && ( // если статус равен true
-                            //создаем элемент списка с уникальным ключом
+                            //создаем элемент списка с уникальным ключом, если в jsonData нет ключа _id то создаем сами при помощи nanoid
                             <li key={item._id}>
                                 <a href={item.link}>{item.title}</a>
                                 <input
@@ -77,10 +78,14 @@ function Container() {
 
     async function handleAddBookmark(event) { // асинхронная функция для добавления закладки
         event.preventDefault(); // предотвращение действия по умолчанию при отправке формы
+        let newBookmark = {...bookmark};
+        if (!newBookmark._id) {
+            newBookmark._id = nanoid(4)
+        }
         try {
             const response = await axios.post('http://localhost:3002/add/', bookmark); // отправка POST-запроса с данными о закаладке на сервер
             console.log('Данные успешно отправлены на сервер:', response.data);
-            const updatedData = jsonData ? [...jsonData, bookmark] : [bookmark]; // добавляем новую закладку к существующим данным, или создаем новый массив, если данных ещё нет
+            const updatedData = jsonData ? [...jsonData, newBookmark] : [newBookmark]; // добавляем новую закладку к существующим данным, или создаем новый массив, если данных ещё нет
             setJsonData(updatedData); // обновление состояния jsonData новыми данными
         } catch (error) {
             console.error('Ошибка при отправке данных на сервер:', error);
