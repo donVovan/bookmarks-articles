@@ -2,12 +2,12 @@ import SliderComponent from "./slider/SliderComponent.jsx";
 import {MyContext} from "./MyContext";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import { nanoid } from "nanoid";
+import {nanoid} from "nanoid";
 
 function Container() {
     const [bookmark, setBookmark] = useState({ // определение состояния bookmark и функции для его обновления
-        link:'',
-        title:'',
+        link: '',
+        title: '',
         status: true
     })
     const [jsonData, setJsonData] = useState(null); //определение состояния jsonData (JSON-данные) и функции для его обновления
@@ -26,7 +26,7 @@ function Container() {
 
     function handleStatus(index) { // функция для обновления статуса элемента по индексу
         const updatedData = jsonData.map((item, i) => { // обновление данных: создание нового массива с обновленным элементом
-            if (i === index){ // если индекс соответствует переданному
+            if (i === index) { // если индекс соответствует переданному
                 return {...item, status: false}; // возвращаем обновлённый элемент со статусом false
             }
             return item; // иначе возвращаем элемент без изменений
@@ -66,59 +66,43 @@ function Container() {
         }
     }
 
-
-    function renderDataNew() { // функция для отображения новых закладок
-        if (jsonData){
-            return (
-                <>
-                <ul>
-                    {jsonData.map((item, index) => ( //маппинг данных для отображения в виде списка
-                        item.status && ( // если статус равен true
-                            //создаем элемент списка с уникальным ключом, если в jsonData нет ключа _id то создаем сами при помощи nanoid
-                            <li key={item._id}>
-                                <a href={item.link}>{item.title}</a>
-                                <input
-                                    type="checkbox"
-                                    checked={item.checked}
-                                    onChange={() => handleStatus(index)} // обработчик изменения состояния при клике на чекбокс
-                                />
-                            </li>
-                        )
-                        )
-                    )}
-                </ul>
-                    <button onClick={handleButtonClickMove}>Сохранить изменения</button>
-                </>
-            )
-        }
-    }
-
-    function renderDataOld() {
-        if (jsonData){
+    function renderData(desiredStatus) {
+        if (jsonData) {
             return (
                 <>
                     <ul>
-                        {jsonData.map((item, index) => ( //маппинг данных для отображения в виде списка
-                                !item.status && ( // если статус равен true
-                                    //создаем элемент списка с уникальным ключом, если в jsonData нет ключа _id то создаем сами при помощи nanoid
+                        {jsonData.map((item, index) => {
+                            if (item.status === desiredStatus) {
+                                return (
                                     <li key={item._id}>
                                         <a href={item.link}>{item.title}</a>
-                                        <input
-                                            type="checkbox"
-                                            checked={item.checked}
-                                            onChange={() => removeItem(index)} // обработчик изменения состояния при клике на чекбокс
-                                        />
+                                        {desiredStatus ? (
+                                            <input
+                                                type="checkbox"
+                                                checked={item.checked}
+                                                onChange={() => handleStatus(index)}
+                                            />
+                                        ) : (
+                                            <input
+                                                type="checkbox"
+                                                checked={item.checked}
+                                                onChange={() => removeItem(index)}
+                                            />
+                                        )}
                                     </li>
-                                )
-                            )
-                        )}
+                                );
+                            } else {
+                                return null;
+                            }
+                        })}
                     </ul>
-                    <button onClick={handleButtonClickDel}>Сохранить изменения</button>
+                    <button onClick={desiredStatus ? handleButtonClickMove : handleButtonClickDel}>
+                        Сохранить изменения
+                    </button>
                 </>
-            )
+            );
         }
     }
-
 
 
     async function handleAddBookmark(event) { // асинхронная функция для добавления закладки
@@ -142,19 +126,19 @@ function Container() {
         return <div>
             <form onSubmit={handleAddBookmark}>
 
-                    Link: <input
-                    type="text"
-                    value={bookmark.link}
-                    onChange={event => setBookmark({...bookmark, link: event.target.value})}
-                    placeholder="Ссылка"
-                />
+                Link: <input
+                type="text"
+                value={bookmark.link}
+                onChange={event => setBookmark({...bookmark, link: event.target.value})}
+                placeholder="Ссылка"
+            />
 
-                    title: <input
-                    type="text"
-                    value={bookmark.title}
-                    onChange={event => setBookmark({...bookmark, title: event.target.value})}
-                    placeholder="Описание"
-                />
+                title: <input
+                type="text"
+                value={bookmark.title}
+                onChange={event => setBookmark({...bookmark, title: event.target.value})}
+                placeholder="Описание"
+            />
 
                 <button type="submit">Add Bookmark</button>
             </form>
@@ -164,8 +148,7 @@ function Container() {
 
     const functions = {
         renderAddBookmark: renderAddBookmark,
-        renderDataNew: renderDataNew,
-        renderDataOld: renderDataOld
+        renderData: renderData
     }
     return (
         <>

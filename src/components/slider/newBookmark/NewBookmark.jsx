@@ -5,7 +5,7 @@ function NewBookmark() {
     const functions = useContext(MyContext);
 
     return <div>
-        {functions.renderDataNew()}
+        {functions.renderData(true)}
     </div>
 }
 

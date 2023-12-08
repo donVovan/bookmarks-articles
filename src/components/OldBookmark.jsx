@@ -4,7 +4,7 @@ import {MyContext} from "./MyContext.jsx";
 function OldBookmark() {
     const functions = useContext(MyContext)
     return <div>
-        {functions.renderDataOld()}
+        {functions.renderData(false)}
     </div>
 }
 
