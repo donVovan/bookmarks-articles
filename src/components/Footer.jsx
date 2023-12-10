@@ -1,26 +1,14 @@
-import {useEffect} from "react";
-
 function Footer() {
-    useEffect(() => {
-        fetchReq()
-    }, [])
 
-    async function fetchReq() {
-        let button = document.querySelector('button')
-        button.addEventListener('click', function () {
-            let promise = fetch('/handler/', {
-                method: 'post',
-                body: 'num1=1&num2=2',
-                headers: {
-                    'Conten-Type': 'application/x-www-form-urlencoded',
-                },
-            });
-        });
-    }
 
     return (
         <div>
-            <button>Запрос</button>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore expedita neque sequi sit sunt tempore
+                vel! A aliquid asperiores beatae eligendi itaque numquam officia quam repellat, saepe ullam! Exercitationem, placeat!
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore expedita neque sequi sit sunt tempore
+                vel! A aliquid asperiores beatae eligendi itaque numquam officia quam repellat, saepe ullam! Exercitationem, placeat!
+            </p>
         </div>
     )
 }
