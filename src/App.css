@@ -57,3 +57,18 @@
 form>div {
   padding-bottom: 10px;
 }
+
+.list {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+
+
+.list_item {
+  margin: 5px;
+  padding: 5px;
+  display: flex;
+}

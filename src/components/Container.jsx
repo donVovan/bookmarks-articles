@@ -70,11 +70,13 @@ function Container() {
         if (jsonData) {
             return (
                 <>
-                    <ul>
+                    <ul className="list">
                         {jsonData.map((item, index) => {
                             if (item.status === desiredStatus) {
                                 return (
-                                    <li key={item._id}>
+                                    <li
+                                        className="list_item"
+                                        key={item._id}>
                                         <a href={item.link}>{item.title}</a>
                                         {desiredStatus ? (
                                             <input
