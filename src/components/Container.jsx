@@ -123,24 +123,26 @@ function Container() {
     }
 
     function renderAddBookmark() {
-        return <div>
+        return <div className="addBookmark">
             <form onSubmit={handleAddBookmark}>
-
-                Link: <input
-                type="text"
-                value={bookmark.link}
-                onChange={event => setBookmark({...bookmark, link: event.target.value})}
-                placeholder="Ссылка"
-            />
-
-                title: <input
-                type="text"
-                value={bookmark.title}
-                onChange={event => setBookmark({...bookmark, title: event.target.value})}
-                placeholder="Описание"
-            />
-
-                <button type="submit">Add Bookmark</button>
+                <div>
+                    <span>Ссылка:</span> <input
+                    className="inp_text"
+                    type="text"
+                    value={bookmark.link}
+                    onChange={event => setBookmark({...bookmark, link: event.target.value})}
+                    placeholder="Ссылка"
+                />
+                    <span>Описание:</span> <input
+                    className="inp_text"
+                    type="text"
+                    value={bookmark.title}
+                    onChange={event => setBookmark({...bookmark, title: event.target.value})}
+                    placeholder="Описание"
+                /></div>
+                <div>
+                    <button type="submit">Добавить закладку</button>
+                </div>
             </form>
 
         </div>
