@@ -118,6 +118,12 @@ function Container() {
             console.log('Данные успешно отправлены на сервер:', response.data);
             const updatedData = jsonData ? [...jsonData, newBookmark] : [newBookmark]; // добавляем новую закладку к существующим данным, или создаем новый массив, если данных ещё нет
             setJsonData(updatedData); // обновление состояния jsonData новыми данными
+            setBookmark({
+                // Обновление состояния bookmark после успешной отправки данных на сервер
+                link: '', // Очистка значения link
+                title: '', // Очистка значения title
+                status: true
+            })
         } catch (error) {
             console.error('Ошибка при отправке данных на сервер:', error);
             // Логика обработки ошибки, если необходимо
@@ -125,7 +131,7 @@ function Container() {
     }
 
     function renderAddBookmark() {
-        return <div className="addBookmark">
+        return <div className="addBookmark ">
             <form onSubmit={handleAddBookmark}>
                 <div>
                     <span>Ссылка:</span> <input

@@ -27,6 +27,34 @@
   }
 }
 
+.header {
+  width: 100%;
+  background: #fff;
+  padding: 15px 0;
+  z-index: 100;
+  -webkit-box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+}
+
+.header__inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 0 15px;
+}
+
+.slider_container {
+
+}
+
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
@@ -71,4 +99,11 @@ form>div {
   margin: 5px;
   padding: 5px;
   display: flex;
+}
+.content {
+  min-height: calc(100vh - 70px);
+}
+.footer {
+  height: 50px;
+  font-size: 12px;
 }
