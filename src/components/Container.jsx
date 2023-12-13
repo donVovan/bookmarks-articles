@@ -15,7 +15,7 @@ function Container() {
 
     console.log(bookmark)
     useEffect(() => { // эффект, который срабатывает после первого рендера компонента
-        axios.get('http://localhost:3002/test/') // выполнение GET-запроса к серверу для получения данных
+        axios.get('/test/') // выполнение GET-запроса к серверу для получения данных
             .then(response => { // обработка успешного ответа от сервера
                 setJsonData(response.data) // обновление состояния jsonData данными из ответа
             })
@@ -44,7 +44,7 @@ function Container() {
 
     async function handleButtonClickMove() { // асинхронная функция для обработки клика по кнопке
         try {
-            const response = await axios.post('http://localhost:3002/data/', jsonData); // отправка POST-запроса с данными на сервер
+            const response = await axios.post('/data/', jsonData); // отправка POST-запроса с данными на сервер
             console.log('Данные успешно отправлены на сервер:', response.data);
             // Логика обновления UI или другие действия после успешной отправки
         } catch (error) {
@@ -56,7 +56,7 @@ function Container() {
     async function handleButtonClickDel() {
         try {
             await Promise.all(deletedItems.map(async (item) => {
-                const response = await axios.delete(`http://localhost:3002/delete/${item._id}`); // отправка DELETE-запроса для удаления элемента по ID на сервер
+                const response = await axios.delete(`/delete/${item._id}`); // отправка DELETE-запроса для удаления элемента по ID на сервер
                 console.log('Элемент успешно удален с сервера:', response.data);
             }));
             setDeletedItems([]);// очищаем состояние deletedItems после успешного удаления
@@ -114,7 +114,7 @@ function Container() {
             newBookmark._id = nanoid(4)
         }
         try {
-            const response = await axios.post('http://localhost:3002/add/', bookmark); // отправка POST-запроса с данными о закаладке на сервер
+            const response = await axios.post('/add/', bookmark); // отправка POST-запроса с данными о закаладке на сервер
             console.log('Данные успешно отправлены на сервер:', response.data);
             const updatedData = jsonData ? [...jsonData, newBookmark] : [newBookmark]; // добавляем новую закладку к существующим данным, или создаем новый массив, если данных ещё нет
             setJsonData(updatedData); // обновление состояния jsonData новыми данными
