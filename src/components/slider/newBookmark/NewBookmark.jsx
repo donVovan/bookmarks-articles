@@ -5,7 +5,7 @@ function NewBookmark() {
     const functions = useContext(MyContext);
 
     return <div>
-        <h4>Отметьте ссылки для переноса в архив</h4>
+        <h4>Для удаления из базы отметьте</h4>
         {functions.renderData(true)}
     </div>
 }

@@ -8,7 +8,7 @@ function AddBookmark() {
 
     return (
         <>
-            <h4>Добавьте ссылку и описание</h4>
+            <h4>Для переноса в архив отметьте</h4>
             {functions.renderAddBookmark()}
         </>
     )
